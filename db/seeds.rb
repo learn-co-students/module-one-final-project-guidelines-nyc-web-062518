@@ -60,4 +60,4 @@ Student.all.each do |each_student|
 	Teacher.all.each do |each_teacher|
 		HouseNameCheckingList.create(student_id: each_student.id, teacher_id: each_teacher.id)
 	end
-en
+end
