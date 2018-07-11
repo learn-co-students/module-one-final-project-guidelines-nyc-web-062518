@@ -221,17 +221,31 @@ def teachers(house_choice)
 	end
 end
 
-def runner
-	student_name = welcome_to_hogwarts
-	house_result = sorting_hat
-	student_instance = Student.create(name: student_name, house: house_result)
-	student_id = student_instance.id
+def create_student(student_name, house_result)
+	Student.create(name: student_name, house: house_result)
+end
+
+def create_house_name_checking_list(student)
+	student_id = student.id
 	Teacher.all.each do |each_teacher|
 		HouseNameCheckingList.create(student_id: student_id, teacher_id: each_teacher.id)
 	end
+end
+
+def good_night
+	puts ""
+	puts "Enjoy your feast and Good night!"
+end
+
+def runner
+	student_name = welcome_to_hogwarts
+	house_result = sorting_hat
+	student_instance = create_student(student_name, house_result)
+	create_house_name_checking_list(student_instance)
 	housemates(house_result)
 	teachers(house_result)
-	binding.pry
+	good_night
+	# binding.pry
 end
 
 runner
