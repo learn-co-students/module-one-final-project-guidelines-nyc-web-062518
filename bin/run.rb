@@ -47,6 +47,7 @@ def welcome_to_hogwarts
 	puts "Hello, #{user_name}!"
 	puts "Did you notice anything special when you were growing up?"
 	puts "You are a wizard/witch!"
+	user_name
 end
 
 def sorting_hat
@@ -221,11 +222,16 @@ def teachers(house_choice)
 end
 
 def runner
-	welcome_to_hogwarts
-	result = sorting_hat
-	housemates(result)
-	teachers(result)
-	# binding.pry
+	student_name = welcome_to_hogwarts
+	house_result = sorting_hat
+	student_instance = Student.create(name: student_name, house: house_result)
+	student_id = student_instance.id
+	Teacher.all.each do |each_teacher|
+		HouseNameCheckingList.create(student_id: student_id, teacher_id: each_teacher.id)
+	end
+	housemates(house_result)
+	teachers(house_result)
+	binding.pry
 end
 
 runner
