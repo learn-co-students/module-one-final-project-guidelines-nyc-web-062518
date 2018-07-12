@@ -45,9 +45,12 @@ def welcome_to_hogwarts
 	user_name = gets.chomp
 	puts " "
 	puts "Hello, #{user_name}!"
-	puts "Did you notice anything special when you were growing up?"
-	puts "You are a wizard/witch!"
 	user_name
+end
+
+def welcome_message
+	puts "Did you notice anything special when you were growing up?"
+	puts "You are a wizard/witch!"	
 end
 
 def sorting_hat
@@ -203,6 +206,14 @@ def sorting_hat
 	end
 end
 
+# def create_student(student_name, house_result)
+# 	Student.create(name: student_name, house: house_result)
+# end
+
+def find_student(student_name)
+	puts "Welcome back! Feel free to drink some Butterbeer!"
+end
+
 def create_student(student_name, house_result)
 	Student.create(name: student_name, house: house_result)
 end
@@ -260,6 +271,11 @@ end
 
 def runner
 	student_name = welcome_to_hogwarts
+	if Student.find_by(name: student_name)
+		find_student(student_name)
+		exit
+	end
+	welcome_message
 	house_result = sorting_hat
 	student_instance = create_student(student_name, house_result)
 	create_house_name_checking_list(student_instance)
