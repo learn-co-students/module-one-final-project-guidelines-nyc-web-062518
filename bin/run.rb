@@ -51,6 +51,7 @@ def welcome_to_hogwarts
 end
 
 def sorting_hat
+	houses = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]
 	sorting_hat = '
             .
            /:\\
@@ -62,15 +63,22 @@ def sorting_hat
     """--_______--"""
 	'
 	puts sorting_hat
-	houses = ["Gryffindor", "Hufflepuff", "Ravenclaw", "Slytherin"]
-	puts "Tell me something about yourself."
-	puts "Input 1 if you have brave at heart."
-	puts "Input 2 if you are just and loyal."
-	puts "Input 3 if you are wise and learning."
-	puts "Input 4 if you want to use any means to achieve your ends."
-	user_choice = gets.chomp
+	# puts "Tell me something about yourself."
+	# puts "Input 1 if you have brave at heart."
+	# puts "Input 2 if you are just and loyal."
+	# puts "Input 3 if you are wise and learning."
+	# puts "Input 4 if you want to use any means to achieve your ends."
+	# user_choice = gets.chomp
+	prompt = TTY::Prompt.new
+	user_choice = prompt.select("Tell me something about yourself", [
+		"you have brave at heart",
+		"you are just and loyal",
+		"you are wise and learning",
+		"you want to use any means to achieve your ends"
+	])
+	# binding.pry
 	case user_choice
-	when "1"
+	when "you have brave at heart"
 		lion = "
                       ,.
                     ,_> `.   ,';
@@ -111,7 +119,7 @@ def sorting_hat
 		puts lion
 		puts "#{houses[0]}!"
 		houses[0]
-	when "2"
+	when "you are just and loyal"
 		badger = "
 								___,,___
            _,-='=- =-  -`'--.__,,.._
@@ -129,7 +137,7 @@ def sorting_hat
 		puts badger
 		puts "#{houses[1]}!"
 		houses[1]
-	when "3"
+	when "you are wise and learning"
 		eagle = "
                                /T /I
                               / |/ | .-~/
@@ -167,7 +175,7 @@ def sorting_hat
 		puts eagle
 		puts "#{houses[2]}!"
 		houses[2]
-	when "4"
+	when "you want to use any means to achieve your ends"
 		snake = "
                      /^\\/^\\
                   _|__|  O|
@@ -195,6 +203,17 @@ def sorting_hat
 	end
 end
 
+def create_student(student_name, house_result)
+	Student.create(name: student_name, house: house_result)
+end
+
+def create_house_name_checking_list(student)
+	student_id = student.id
+	Teacher.all.each do |each_teacher|
+		HouseNameCheckingList.create(student_id: student_id, teacher_id: each_teacher.id)
+	end
+end
+
 def housemates(house_choice)
 	puts "Do you want to know who your housemates are?(y/n)"
 	user_input = gets.chomp
@@ -208,27 +227,29 @@ def housemates(house_choice)
 	end
 end
 
-def teachers(house_choice)
+# def teachers(house_choice)
+# 	puts "Do you want to know who your teachers are?(y/n)"
+# 	user_input = gets.chomp
+# 	if user_input == "y" || user_input == "Y"
+# 		teacher_records = Teacher.where(house: house_choice)
+# 		teacher_records.map do |teacher|
+# 			puts teacher.name
+# 		end
+# 	else
+# 		puts "Go to your dorm and rest well. Big day tomorrow!"
+# 	end
+# end
+
+def teachers(student)
 	puts "Do you want to know who your teachers are?(y/n)"
 	user_input = gets.chomp
 	if user_input == "y" || user_input == "Y"
-		teacher_records = Teacher.where(house: house_choice)
+		teacher_records = student.teachers
 		teacher_records.map do |teacher|
 			puts teacher.name
 		end
 	else
 		puts "Go to your dorm and rest well. Big day tomorrow!"
-	end
-end
-
-def create_student(student_name, house_result)
-	Student.create(name: student_name, house: house_result)
-end
-
-def create_house_name_checking_list(student)
-	student_id = student.id
-	Teacher.all.each do |each_teacher|
-		HouseNameCheckingList.create(student_id: student_id, teacher_id: each_teacher.id)
 	end
 end
 
@@ -243,7 +264,7 @@ def runner
 	student_instance = create_student(student_name, house_result)
 	create_house_name_checking_list(student_instance)
 	housemates(house_result)
-	teachers(house_result)
+	teachers(student_instance)
 	good_night
 	# binding.pry
 end
