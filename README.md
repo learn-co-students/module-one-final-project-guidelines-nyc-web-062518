@@ -5,7 +5,7 @@ Congrats to all the new students who have recently been accepted to Hogwarts Sch
 Clone this repo from Github. CD into the main directory using your console and run `bundle install` to install all Gem dependencies.
 
 ## Launch Your App
-To launch this app, go into the root folder and type 'ruby bin/run.rb'.
+To launch this app, go into the root folder and type 'ruby bin/run.rb'. Here is the link to demonstrate this app: http://recordit.co/BTqlqdqGj2
 
 ## The Magic Behind This CLI App
 With this CLI App, an incoming or returning student at Hogwarts wishing to finally fulfill their dreams of being a wizard or witch will be able to add their names to a roster of other talented wizards/witches. This CLI App will first ask the hopeful student what their name is and then prompt them to choose one of the options from the Sorting Hat. Based on your choice, the Sorting Hat will assign you to a house. A house like a family when you're at Hogwarts.
