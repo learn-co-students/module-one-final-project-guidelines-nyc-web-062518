@@ -1,4 +1,4 @@
-## Harry Potter Project - Welcome to your 1st day at Hogwarts!
+# Harry Potter Project - Welcome to your 1st day at Hogwarts!
 Congrats to all the new students who have recently been accepted to Hogwarts School of Witchcraft and Wizardry, and to all the returning students, welcome back! There's a lot to cover during the next year at Hogwarts. Before we start, let's assign the new students to a house.
 
 ## Installation
